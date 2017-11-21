@@ -1,11 +1,43 @@
-<div class="source-editor" data-mode="markdown">
 <%= form_for(@article) do |f| %>
   <%= f.label :title %>
-  <%= f.text_field :title, style: 'display: block; width: 400px;' %>
-
+  <%= f.text_field :title, style: 'display: block; width: 400px;'%>
   <%= f.label :content %>
-  <%= f.text_area :content, style: 'display: block; height: 200px; width: 400px;' %>
-
   <%= f.submit %>
-<% end %>
+  <div class="source-editor" data-mode="markdown">
+  <%= f.text_area :content, style: "width: 400px; height: 200px;" %>
 </div>
+<% end %>
+
+
+<script>
+  $('.source-editor').each(function() {
+  var container = $(this);
+  var mode = container.data('mode');
+  var editorArea = container.find('textarea');
+
+  // build a edit div for ACE since ACE can't load in a textarea
+  var editDiv = $('<div>', {
+    position: 'absolute',
+      width: editorArea.width(),
+      height: editorArea.height(),
+      'class': editorArea.attr('class')
+    }).insertBefore(editorArea);
+  // no need to display textarea
+  editorArea.css('display', 'none');
+
+  var editor = ace.edit(editDiv[0]);
+
+  editor.setFontSize('14px');
+  editor.setTheme('ace/theme/yesterday');
+  editor.getSession().setMode('ace/mode/' + mode);
+  editor.getSession().setValue(editorArea.val());
+  editorArea.closest('form').submit(function() {
+    editorArea.val(editor.getSession().getValue());
+  });
+});
+</script>
+
+
+
+
+
