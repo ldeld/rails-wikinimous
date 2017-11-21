@@ -1,0 +1,4 @@
+<h1> <%= @article.title %></h1>
+<%= raw Kramdown::Document.new(@article.content).to_html %>
+
+<%= link_to "go back to articles", articles_path %>

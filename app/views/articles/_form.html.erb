@@ -1,0 +1,11 @@
+<div class="source-editor" data-mode="markdown">
+<%= form_for(@article) do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title, style: 'display: block; width: 400px;' %>
+
+  <%= f.label :content %>
+  <%= f.text_area :content, style: 'display: block; height: 200px; width: 400px;' %>
+
+  <%= f.submit %>
+<% end %>
+</div>
